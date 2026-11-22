@@ -6,8 +6,15 @@
 ![ArgoCD CLI](https://img.shields.io/badge/CLI-v2.14.9-blue)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Cluster-326CE5?logo=kubernetes&logoColor=white)
 ![GitOps](https://img.shields.io/badge/Approach-GitOps-success)
+<img width="1897" height="775" alt="Screenshot 2026-11-17 013407" src="https://github.com/user-attachments/assets/c1f4199f-5e25-440e-a643-937b2feeecbf" />
+<img width="1272" height="686" alt="Screenshot 2026-11-17 012916" src="https://github.com/user-attachments/assets/d48f3f55-6fba-440d-917e-4c21c5c2bd34" />
+
+
+
 
 ---
+
+
 
 ## 📑 Table of Contents
 
@@ -84,6 +91,12 @@ This project covers:
 | **Application repo** | Developers' source of truth for code | Source code, Dockerfile, tests, CI pipeline |
 | **Config (GitOps) repo** | Source of truth for *deployment state* | Kubernetes manifests (Deployments, Services, etc.) |
 
+<img width="1290" height="501" alt="Screenshot 2026-11-17 012421" src="https://github.com/user-attachments/assets/06baca8e-7a59-4a65-93c4-664bf59af05f" />
+<img width="1760" height="600" alt="Screenshot 2026-11-17 012348" src="https://github.com/user-attachments/assets/7ad88c9a-9621-4804-8836-27d6c81ccab7" />
+
+
+
+
 **Benefits of separating them:**
 
 - 🔒 **Access control**: different people/teams can have different permissions on code vs. deployment config.
@@ -142,6 +155,8 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f \
   https://raw.githubusercontent.com/argoproj/argo-cd/v3.6.1/manifests/install.yaml
 ```
+<img width="817" height="447" alt="Screenshot 2026-11-17 013107" src="https://github.com/user-attachments/assets/bd31289c-3dc7-4f66-ae66-313f41b39f24" />
+
 
 > 💡 `manifests/install.yaml` is the **non-HA** install. The HA variant is `manifests/ha/install.yaml`.
 
@@ -409,6 +424,8 @@ kubectl -n argocd rollout restart statefulset argocd-application-controller
 > ℹ️ In v3.x the application controller runs as a **StatefulSet**.
 
 📸 **Screenshot: updated `argocd-cm`**
+<img width="917" height="398" alt="Screenshot 2026-11-17 012257" src="https://github.com/user-attachments/assets/61729e9a-2c5b-48b5-941f-1cb5f4e5f912" />
+
 
 ![Reconciliation timeout](screenshots/11-reconciliation-timeout.png)
 
@@ -460,12 +477,23 @@ git push
 ```
 
 📸 **Screenshot: OutOfSync (1 pod in cluster vs 3 in Git)**
+<img width="1272" height="686" alt="Screenshot 2026-11-17 012916" src="https://github.com/user-attachments/assets/41f9bcba-0a2d-48f3-9d39-c9ea77be09fa" />
+<img width="1341" height="828" alt="Screenshot 2026-11-17 012949" src="https://github.com/user-attachments/assets/5b777749-c085-4814-be73-7d3f1a5940f0" />
+<img width="592" height="136" alt="Screenshot 2026-11-17 012821" src="https://github.com/user-attachments/assets/5bb2dc0b-ca1f-4638-86c7-47679edc5f39" />
+
+
+
 
 ![Out of sync](screenshots/13-out-of-sync.png)
 
 📸 **Screenshot: Synced after fixing Git**
 
 ![Synced](screenshots/14-synced.png)
+<img width="837" height="526" alt="Screenshot 2026-11-17 013518" src="https://github.com/user-attachments/assets/4369e351-fbdd-4236-9e27-ba73fd3b2e97" />
+<img width="767" height="558" alt="Screenshot 2026-11-17 013832" src="https://github.com/user-attachments/assets/08c8ca8c-0e25-46c8-85a1-3a0bd8433d6b" />
+
+
+
 
 > 💡 With **automated sync + self-heal** enabled, ArgoCD would not just report drift, it would also revert manual cluster changes to match Git.
 
@@ -541,5 +569,5 @@ git push
 
 ## 👤 Author
 
-**<Your Name>**
+**Segun Ofe**
 🔗 [GitHub](https://github.com/<your-username>) · [LinkedIn](https://linkedin.com/in/<your-profile>)
