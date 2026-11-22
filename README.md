@@ -2,10 +2,7 @@
 
 > A hands-on implementation of the GitOps workflow using **ArgoCD v3.6.1** on Kubernetes: a non-HA installation, CLI setup, application management through the UI and CLI, automated reconciliation, and a two-repository (application code and configuration) layout.
 
-![ArgoCD](https://img.shields.io/badge/ArgoCD-v3.6.1-orange?logo=argo)
-![ArgoCD CLI](https://img.shields.io/badge/CLI-v2.14.9-blue)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-Cluster-326CE5?logo=kubernetes&logoColor=white)
-![GitOps](https://img.shields.io/badge/Approach-GitOps-success)
+
 <img width="1897" height="775" alt="Screenshot 2026-11-17 013407" src="https://github.com/user-attachments/assets/c1f4199f-5e25-440e-a643-937b2feeecbf" />
 <img width="1272" height="686" alt="Screenshot 2026-11-17 012916" src="https://github.com/user-attachments/assets/d48f3f55-6fba-440d-917e-4c21c5c2bd34" />
 
@@ -48,7 +45,7 @@ This project covers:
 
 - ✅ Installing a **non-HA ArgoCD v3.6.1** in the `argocd` namespace
 - ✅ Inspecting ArgoCD internals (`argocd-cm` ConfigMap, `argocd-server` ports)
-- ✅ Exposing the ArgoCD UI by converting the `argocd-server` Service from `ClusterIP` to `NodePort` (HTTPS port **32766**)
+- ✅ Exposing the ArgoCD UI by converting the `argocd-server` Service from `ClusterIP` to `NodePort` (HTTPS port **30334**)
 - ✅ Installing the **ArgoCD CLI v2.14.9**
 - ✅ Creating and syncing ArgoCD **Applications** via the UI and CLI
 - ✅ Following a **two-repository GitOps pattern**: one repo for application code, one for Kubernetes configuration
@@ -91,6 +88,7 @@ This project covers:
 | **Application repo** | Developers' source of truth for code | Source code, Dockerfile, tests, CI pipeline |
 | **Config (GitOps) repo** | Source of truth for *deployment state* | Kubernetes manifests (Deployments, Services, etc.) |
 
+<img width="1906" height="782" alt="Screenshot 2026-11-17 001345" src="https://github.com/user-attachments/assets/5901e9d3-7d31-46bf-ae71-247a0a753166" />
 <img width="1290" height="501" alt="Screenshot 2026-11-17 012421" src="https://github.com/user-attachments/assets/06baca8e-7a59-4a65-93c4-664bf59af05f" />
 <img width="1760" height="600" alt="Screenshot 2026-11-17 012348" src="https://github.com/user-attachments/assets/7ad88c9a-9621-4804-8836-27d6c81ccab7" />
 
@@ -155,7 +153,7 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f \
   https://raw.githubusercontent.com/argoproj/argo-cd/v3.6.1/manifests/install.yaml
 ```
-<img width="817" height="447" alt="Screenshot 2026-11-17 013107" src="https://github.com/user-attachments/assets/bd31289c-3dc7-4f66-ae66-313f41b39f24" />
+
 
 
 > 💡 `manifests/install.yaml` is the **non-HA** install. The HA variant is `manifests/ha/install.yaml`.
@@ -170,6 +168,7 @@ kubectl get svc -n argocd
 📸 **Screenshot: ArgoCD pods running**
 
 ![ArgoCD pods](screenshots/01-argocd-pods.png)
+<img width="817" height="447" alt="Screenshot 2026-11-17 013107" src="https://github.com/user-attachments/assets/bd31289c-3dc7-4f66-ae66-313f41b39f24" />
 
 ---
 
@@ -185,9 +184,6 @@ kubectl -n argocd describe configmap argocd-cm
 kubectl -n argocd get configmap argocd-cm -o json | jq '.data | length'
 ```
 
-**Answer:** `<N>` entries  *(fill in from your output)*
-
-📸 **Screenshot:**
 
 ![argocd-cm data entries](screenshots/02-argocd-cm.png)
 
@@ -198,17 +194,14 @@ kubectl -n argocd get svc argocd-server
 kubectl -n argocd get deploy argocd-server -o jsonpath='{.spec.template.spec.containers[0].ports}'
 ```
 
-**Answer:** `<port>` *(fill in from your output)*
 
-📸 **Screenshot:**
 
-![argocd-server ports](screenshots/03-argocd-server-ports.png)
 
 ---
 
 ## 🌐 Part 3: Expose the ArgoCD UI via NodePort
 
-By default `argocd-server` is a `ClusterIP` Service, reachable only inside the cluster. To reach the UI from outside, convert it to `NodePort` and pin the HTTPS node port to **32766**.
+By default `argocd-server` is a `ClusterIP` Service, reachable only inside the cluster. To reach the UI from outside, convert it to `NodePort` and pin the HTTPS node port to **30334**.
 
 ```bash
 kubectl -n argocd edit svc argocd-server
@@ -228,7 +221,7 @@ spec:
       port: 443
       protocol: TCP
       targetPort: 8080
-      nodePort: 32766     # ← fixed HTTPS node port
+      nodePort: 30334     
 ```
 
 Or do it non-interactively:
@@ -239,7 +232,7 @@ kubectl -n argocd patch svc argocd-server --type merge -p '{
     "type": "NodePort",
     "ports": [
       {"name":"http",  "port":80,  "targetPort":8080, "protocol":"TCP"},
-      {"name":"https", "port":443, "targetPort":8080, "protocol":"TCP", "nodePort":32766}
+      {"name":"https", "port":443, "targetPort":8080, "protocol":"TCP", "nodePort":30334}
     ]
   }
 }'
@@ -252,8 +245,11 @@ kubectl -n argocd get svc argocd-server
 ```
 
 📸 **Screenshot: Service now of type NodePort**
-
+<img width="691" height="497" alt="Screenshot 2026-11-17 012327" src="https://github.com/user-attachments/assets/1da1d161-5590-48ef-bcdb-cb6a50b52e6a" />
 ![NodePort service](screenshots/04-nodeport-service.png)
+
+
+
 
 📸 **Screenshot: ArgoCD login page**
 
@@ -308,6 +304,7 @@ argocd login <NODE_IP>:32766 --username admin --password <PASSWORD> --insecure
 > ℹ️ **Version note:** the server is **v3.6.1** while the CLI is **v2.14.9**. The CLI works for the commands used here, but for production use keep the CLI and server on matching (or at least close) versions.
 
 📸 **Screenshot: CLI installed and logged in**
+<img width="1206" height="132" alt="Screenshot 2026-11-16 151156" src="https://github.com/user-attachments/assets/b924be79-4445-409b-9877-4787eb82fc08" />
 
 ![ArgoCD CLI](screenshots/07-argocd-cli.png)
 
