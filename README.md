@@ -2,6 +2,7 @@
 
 > A hands-on implementation of the GitOps workflow using **ArgoCD v3.6.1** on Kubernetes: a non-HA installation, CLI setup, application management through the UI and CLI, automated reconciliation, and a two-repository (application code and configuration) layout.
 
+<img width="1678" height="1043" alt="Screenshot 2026-11-17 002324" src="https://github.com/user-attachments/assets/0c1c73db-e4b1-48bc-94f1-f65be8f6123a" />
 
 <img width="1897" height="775" alt="Screenshot 2026-11-17 013407" src="https://github.com/user-attachments/assets/c1f4199f-5e25-440e-a643-937b2feeecbf" />
 <img width="1272" height="686" alt="Screenshot 2026-11-17 012916" src="https://github.com/user-attachments/assets/d48f3f55-6fba-440d-917e-4c21c5c2bd34" />
