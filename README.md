@@ -557,8 +557,8 @@ git push
 
 ---
 
-## 📚 References
-
+## 📚 Helpful References
+- https://kodekloud.com/
 - [ArgoCD Documentation](https://argo-cd.readthedocs.io/)
 - [ArgoCD Releases](https://github.com/argoproj/argo-cd/releases)
 - [ArgoCD Webhook Configuration](https://argo-cd.readthedocs.io/en/stable/operator-manual/webhook/)
@@ -569,4 +569,4 @@ git push
 ## 👤 Author
 
 **Segun Ofe**
-🔗 [GitHub](https://github.com/<your-username>) · [LinkedIn](https://linkedin.com/in/<your-profile>)
+🔗 [GitHub](https://github.com/segunofe) · [LinkedIn](https://www.linkedin.com/in/segunofe/)
