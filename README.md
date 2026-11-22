@@ -385,6 +385,8 @@ argocd app list
 ```
 
 📸 **Screenshot: CLI app creation, sync and list**
+<img width="886" height="651" alt="Screenshot 2026-11-17 002833" src="https://github.com/user-attachments/assets/177ce1b3-8634-4187-b31c-2145117c9d16" />
+
 
 ![CLI app create and sync](screenshots/10-app2-cli.png)
 
